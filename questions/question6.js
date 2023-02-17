@@ -10,17 +10,17 @@ async function question6() {
         .pipe(parse({ delimiter: ",", from_line: 2 }))
         .on("data", function (csvrow) {
           const account = csvrow[3];
-          const amountValue = csvrow[2];
+          const amountValue = Number(csvrow[2]);
           if (!map.has(account)) {
             // it is an array with '0' as amount in dollars
-            // and '1' number of transactions
+            // and '1' as number of transactions
             const arr = [];
-            arr[0] = Number(amountValue);
+            arr[0] = amountValue;
             arr[1] = 1; // first transaction
             map.set(account, arr);
           } else {
             const arr = map.get(account);
-            arr[0] += Number(amountValue);
+            arr[0] += amountValue;
             arr[1]++;
             map.set(account, arr);
           }
